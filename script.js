@@ -1,16 +1,19 @@
-// Write your JavaScript code here!
+window.addEventListener("load", async function() {
+    try {
+        let listedPlanets;
+        let listedPlanetsResponse;
 
-window.addEventListener("load", function() {
+        listedPlanetsResponse = myFetch();
 
-    let listedPlanets;
-    // Set listedPlanetsResponse equal to the value returned by calling myFetch()
-    let listedPlanetsResponse;
-    listedPlanetsResponse.then(function (result) {
-        listedPlanets = result;
-        console.log(listedPlanets);
-    }).then(function () {
-        console.log(listedPlanets);
-        // Below this comment call the appropriate helper functions to pick a planet fom the list of planets and add that information to your destination.
-    })
-    
- });
+        listedPlanetsResponse.then(function(result) {
+            listedPlanets = result;
+            let randomIndex = Math.floor(Math.random() * listedPlanets.length);
+            let randomPlanet = listedPlanets[randomIndex];
+            addDestinationInfo(document, randomPlanet.name, randomPlanet.diameter, randomPlanet.star, randomPlanet.distance, randomPlanet.moons, randomPlanet.imageUrl);
+        }).catch(function(error) {
+            console.log("Error fetching planets:", error);
+        });
+    } catch (error) {
+        console.error('An error occurred:', error);
+    }
+});
